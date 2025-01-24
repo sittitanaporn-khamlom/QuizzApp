@@ -3,8 +3,15 @@ import 'start_screen.dart';
 
 class ResultsScreen extends StatelessWidget {
   final List<String> selectedAnswers;
+  final int correctAnswersCount;
+  final int totalQuestions;
 
-  const ResultsScreen({super.key, required this.selectedAnswers});
+  const ResultsScreen({
+    super.key,
+    required this.selectedAnswers,
+    required this.correctAnswersCount,
+    required this.totalQuestions,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,7 @@ class ResultsScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'You answered ${selectedAnswers.length} questions!',
+                'You answered $correctAnswersCount out of $totalQuestions questions correctly!',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,

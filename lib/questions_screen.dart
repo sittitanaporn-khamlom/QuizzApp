@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/model/quiz_model.dart';
-
 import 'answer_button.dart';
 import 'results_screen.dart';
+import 'data/quizz.dart';
 
 class QuestionsScreen extends StatefulWidget {
   const QuestionsScreen({super.key});
@@ -14,27 +13,24 @@ class QuestionsScreen extends StatefulWidget {
 class _QuestionsScreenState extends State<QuestionsScreen> {
   int currentQuestionIndex = 0;
   List<String> selectedAnswers = [];
-
-  final List<QuizModel> questions = [
-    QuizModel(
-      'What are the main building blocks of Flutter UIs?',
-      ['Widgets', 'Components', 'Blocks', 'Functions'],
-    ),
-    QuizModel(
-      'How are Flutter UIs built?',
-      ['By combining widgets in code', 'By combining widgets in a visual editor', 'By defining widgets in config files', 'By using XCode for iOS and Android Studio for Android'],
-    ),
-  ];
+  int correctAnswersCount = 0;
 
   void selectAnswer(String answer) {
     setState(() {
       selectedAnswers.add(answer);
+      if (answer == questions[currentQuestionIndex].correctAnswer) {
+        correctAnswersCount++;
+      }
       if (currentQuestionIndex < questions.length - 1) {
         currentQuestionIndex++;
       } else {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => ResultsScreen(selectedAnswers: selectedAnswers),
+            builder: (context) => ResultsScreen(
+              selectedAnswers: selectedAnswers,
+              correctAnswersCount: correctAnswersCount,
+              totalQuestions: questions.length,
+            ),
           ),
         );
       }
